@@ -26,6 +26,14 @@ func main() {
 		var withdrawAmount float64
 		fmt.Print("Amount to withdraw: ")
 		fmt.Scan(&withdrawAmount)
+		if withdrawAmount <= 0{
+			fmt.Println("Invalid amount. Amount must be greater than 0")
+			return
+		}
+		if withdrawAmount > float64(accountBalance){
+			fmt.Println("Insufficient balance")
+			return
+		}
 		accountBalance -= int(withdrawAmount)
 		fmt.Println("Cash withdrawal successful. Your new balance is:", accountBalance)
 	}else{
