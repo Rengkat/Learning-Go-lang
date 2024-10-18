@@ -3,11 +3,18 @@ package main
 import (
 	"fmt"
 	"os"
+	"strconv"
 )
-
+const accountBalance = "balance.txt"
+func readFile() float64  {
+	data, _ := os.ReadFile(accountBalance) //ths must be converted to string first
+	balanceTxt := string(data)
+	balance, _ := strconv.ParseFloat(balanceTxt, 64)
+	return balance
+}
 func writeBalanceToFile(balance float64)  {
 	balanceTxt :=fmt.Sprint(balance)
-	os.WriteFile("balance.txt",[]byte(balanceTxt),0644)
+	os.WriteFile(accountBalance,[]byte(balanceTxt),0644)
 }
 func main() {
 	accountBalance :=1000
@@ -31,7 +38,8 @@ func main() {
 			fmt.Print("Enter deposited amount: ")
 			fmt.Scan(&deposited)
 			accountBalance +=int(deposited)
-			fmt.Println("Cash deposited. Your new account is:", accountBalance)	
+			fmt.Println("Cash deposited. Your new account is:", accountBalance)
+			writeBalanceToFile(float64(accountBalance))
 		case 3:
 			var withdrawAmount float64
 			fmt.Print("Amount to withdraw: ")
