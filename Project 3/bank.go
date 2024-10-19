@@ -1,15 +1,22 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"strconv"
 )
 const accountBalance = "balance.txt"
-func readFile() float64  {
-	data, _ := os.ReadFile(accountBalance) //ths must be converted to string first
+func readBalanceFile() (float64, error)  {
+	data, err := os.ReadFile(accountBalance) //ths must be converted to string first
+	if err != nil{
+		return 100, errors.New("failed to find balance file")
+	}
 	balanceTxt := string(data)
-	balance, _ := strconv.ParseFloat(balanceTxt, 64)
+	balance, err := strconv.ParseFloat(balanceTxt, 64)
+	if err != nil{
+		return 1000, errors.New("")
+	}
 	return balance
 }
 func writeBalanceToFile(balance float64)  {
@@ -32,13 +39,13 @@ func main() {
 		fmt.Scan(&choice)
 		switch choice {
 		case 1:
-			fmt.Println("Your account balance is:",accountBalance )
+			fmt.Println("Your account balance is:", readBalanceFile() )
 		case 2:
 			var deposited float64
 			fmt.Print("Enter deposited amount: ")
 			fmt.Scan(&deposited)
 			accountBalance +=int(deposited)
-			fmt.Println("Cash deposited. Your new account is:", accountBalance)
+			fmt.Println("Cash deposited. Your new account is:", readBalanceFile())
 			writeBalanceToFile(float64(accountBalance))
 		case 3:
 			var withdrawAmount float64
