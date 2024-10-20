@@ -17,14 +17,23 @@ func readBalanceFile() (float64, error)  {
 	if err != nil{
 		return 1000, errors.New("")
 	}
-	return balance
+	return balance, nil
 }
 func writeBalanceToFile(balance float64)  {
 	balanceTxt :=fmt.Sprint(balance)
 	os.WriteFile(accountBalance,[]byte(balanceTxt),0644)
 }
 func main() {
-	accountBalance :=1000
+	accountBalance, err := readBalanceFile()
+	if err != nil{
+		fmt.Println("ERROR")
+		fmt.Print(err)
+		fmt.Println("----------------")
+		//you can exit the program once there is error
+		//1. by using return
+		//3. by using panic function
+		panic("Sorry, can't continue")
+	}
 	fmt.Println("Welcome to Go bank")
 	for {
 		
@@ -39,13 +48,13 @@ func main() {
 		fmt.Scan(&choice)
 		switch choice {
 		case 1:
-			fmt.Println("Your account balance is:", readBalanceFile() )
+			fmt.Println("Your account balance is:", accountBalance )
 		case 2:
 			var deposited float64
 			fmt.Print("Enter deposited amount: ")
 			fmt.Scan(&deposited)
-			accountBalance +=int(deposited)
-			fmt.Println("Cash deposited. Your new account is:", readBalanceFile())
+			accountBalance +=float64(deposited)
+			fmt.Println("Cash deposited. Your new account is:", accountBalance)
 			writeBalanceToFile(float64(accountBalance))
 		case 3:
 			var withdrawAmount float64
@@ -59,7 +68,7 @@ func main() {
 				fmt.Println("Insufficient balance")
 				continue
 			}
-			accountBalance -= int(withdrawAmount)
+			accountBalance -= float64(withdrawAmount)
 			fmt.Println("Cash withdrawal successful. Your new balance is:", accountBalance)
 			writeBalanceToFile(float64(accountBalance))
 		default:
