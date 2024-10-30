@@ -1,12 +1,8 @@
 package main
 
-import (
-	"fmt"
-	"interest-calculator/calcfunc"
-)
+import "fmt"
 
-
-func main() {
+func prompt() {
 	var amount float64
 	var year int
 	var rate float64
@@ -16,8 +12,4 @@ func main() {
 	fmt.Scan(&year)
 	fmt.Print("Enter invested rate: ")
 	fmt.Scan(&rate)
-	interest := calcfunc.Calculate(amount,year, rate)
-	fmt.Printf("Your interest is: %.1f", interest)
-
 }
-
