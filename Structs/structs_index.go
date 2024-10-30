@@ -10,6 +10,9 @@ type user struct{
 	dob string
 	createAt time.Time
 }
+func (u user) printDetail()  {
+	fmt.Println(u.firstName,u.surname,u.dob )
+}
 func main() {
 	var userFirstName = getInfo("Enter first name: ")
 	var userSurname = getInfo("Enter surname: ")
@@ -31,11 +34,9 @@ func main() {
 	// 	 time.Now(),
 	// }
 
-	printDetail(appUser)
+	appUser.printDetail()//instantiating 
 }
-func printDetail(u user)  {
-	fmt.Println(u.firstName,u.surname,u.dob )
-}
+
 func getInfo(detailQuestion string) string {
 	fmt.Print(detailQuestion)
 	var text string
