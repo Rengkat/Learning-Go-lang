@@ -13,6 +13,10 @@ type user struct{
 func (u user) printDetail()  {
 	fmt.Println(u.firstName,u.surname,u.dob )
 }
+func (u *user) clearName()  { //use pointer to remove the original copy from memory
+	u.firstName = ""
+	u.surname = ""
+}
 func main() {
 	var userFirstName = getInfo("Enter first name: ")
 	var userSurname = getInfo("Enter surname: ")
@@ -35,6 +39,8 @@ func main() {
 	// }
 
 	appUser.printDetail()//instantiating 
+	appUser.clearName()
+	appUser.printDetail()
 }
 
 func getInfo(detailQuestion string) string {
