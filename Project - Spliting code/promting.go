@@ -1,8 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/Pallinder/go-randomdata"
+)
 
 func prompt() {
+	//external pakage
+	fmt.Println(randomdata.Female)
 	var amount float64
 	var year int
 	var rate float64
