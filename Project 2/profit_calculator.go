@@ -1,15 +1,21 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 func main() {
 	// var revenue float64
 	// var expenses float64
 	// var taxRate float64
 
-	revenue :=printText("Revenue: ")
-	expenses:=printText("Expenses: ")
-	taxRate:=printText("Tax rate: ")
+	revenue,err :=printText("Revenue: ")
+	if err != nil{
+		fmt.Print(err)
+	}
+	expenses,err:=printText("Expenses: ")
+	taxRate,err:=printText("Tax rate: ")
 	
 	ebt, profit, ratio := calculateProfit(revenue,expenses,taxRate)
 	// ebt :=revenue - expenses
@@ -22,11 +28,14 @@ func main() {
 	fmt.Printf(`the ration is: %.2f`,ratio) //2d.p-> use Printf with %
 	// Text(4,6)
 }
-func printText(txt string) float64  {
+func printText(txt string) (float64, error){
 	var userInput float64
 	fmt.Print(txt)
 	fmt.Scan(&userInput)
-	return userInput
+	if userInput <= 0 {
+		return 0, errors.New("Number must be positive value")
+	}
+	return userInput, nil
 }
 
 func calculateProfit(revenue float64, expenses float64, taxRate float64) (float64,float64,float64){
